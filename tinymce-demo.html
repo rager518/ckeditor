@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+    <h1>TinyMCE Inline Editing Mode Guide</h1>
+    <form method="post">
+        <div id="myeditablediv">Click here to edit!</div>
+    </form>
+</body>
+<script src="tinymce/tinymce.js"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: '#myeditablediv',
+        inline: true,
+        auto_focus: true,
+        setup: function (editor) {
+            //editor.focus();
+        }
+    }).then(editor=>{
+        debugger;
+    });
+
+</script>
+
+</html>

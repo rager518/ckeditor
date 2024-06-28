@@ -23,10 +23,17 @@
   "author": "Artur Arseniev",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@types/ckeditor4": "^4.20.0"
+    "@ckeditor/ckeditor5-build-inline": "^41.4.2",
+    "@ckeditor/ckeditor5-paragraph": "^41.4.2",
+    "@ckeditor/ckeditor5-utils": "^42.0.0",
+    "@types/ckeditor4": "^4.20.0",
+    "ckeditor5": "^42.0.0",
+    "tinymce": "^7.2.0"
   },
   "devDependencies": {
+    "css-loader": "^7.1.2",
     "grapesjs": "^0.21.2",
-    "grapesjs-cli": "^4.1.0"
+    "grapesjs-cli": "^4.1.0",
+    "style-loader": "^4.0.0"
   }
 }

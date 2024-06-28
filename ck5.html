@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrapeJS with CK5</title>
+    <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/grapesjs"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/inline/ckeditor.js"></script>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .cke_toolbar.cke_toolbar {
+            min-height: 33px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="gjs" style="height:0px; overflow:hidden">
+        <div class="cont">
+            <div class="card">
+                <h1 class="card-title">Title Heading 1</h1>
+                <p class="card-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor
+                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident,
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <div class="card">
+                <h1 class="card-title">Title Heading 2</h1>
+                <p class="card-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor
+                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident,
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <div class="card">
+                <h1 class="card-title">Title Heading 3</h1>
+                <p class="card-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor
+                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident,
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
+        <style>
+            .cont {
+                background-color: #f5f8fa;
+                padding: 100px 10px;
+            }
+
+            .card {
+                font-family: Helvetica, serif;
+                color: #555;
+                margin: 0 auto 50px;
+                padding: 10px 20px 30px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+                border-radius: 2px;
+                background-color: #fff;
+                width: 90%;
+                max-width: 700px;
+            }
+
+            .card-title {
+                color: #333;
+                font-size: 50px;
+                font-weight: 100;
+            }
+
+            .card-content {
+                font-weight: 100;
+                line-height: 30px;
+            }
+        </style>
+    </div>
+    <script>
+
+        let config = {
+            toolbar: {
+                items: [
+                    'bold', 'italic',
+                ],
+                shouldNotGroupWhenFull: true
+            },
+            // Changing the language of the interface requires loading the language file using the <script> tag.
+            // language: 'es',
+            list: {
+                properties: {
+                    styles: true,
+                    startIndex: true,
+                    reversed: true
+                }
+            },
+            // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                ]
+            },
+            // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+            placeholder: 'Welcome to GohoEditor !',
+            // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+            fontFamily: {
+                options: [
+                    'default',
+                    'Arial, Helvetica, sans-serif',
+                    'Courier New, Courier, monospace',
+                    'Georgia, serif',
+                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                    'Tahoma, Geneva, sans-serif',
+                    'Times New Roman, Times, serif',
+                    'Trebuchet MS, Helvetica, sans-serif',
+                    'Verdana, Geneva, sans-serif'
+                ],
+                supportAllValues: true
+            },
+            // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+            fontSize: {
+                options: [10, 12, 14, 'default', 18, 20, 22, 24, 26, 28, 30, 32],
+                supportAllValues: true
+            },
+
+            // The "superbuild" contains more premium features that require additional configuration, disable them below.
+            // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+            removePlugins: [
+                'AIAssistant',
+                'CKBox',
+                'CKFinder',
+                'EasyImage',
+                'MultiLevelList',
+                'RealTimeCollaborativeComments',
+                'RealTimeCollaborativeTrackChanges',
+                'RealTimeCollaborativeRevisionHistory',
+                'PresenceList',
+                'Comments',
+                'TrackChanges',
+                'TrackChangesData',
+                'RevisionHistory',
+                'Pagination',
+                'WProofreader',
+                'MathType',
+                'SlashCommand',
+                'Template',
+                'DocumentOutline',
+                'FormatPainter',
+                'TableOfContents',
+                'PasteFromOfficeEnhanced',
+                'CaseChange'
+            ]
+        };
+
+        const customRTE = (editor) => {
+            const focus = (el, rte) => {
+                if (rte?.ui.view.editable.isFocused) return;
+                el.contentEditable = 'true';
+
+                rte?.focus();
+                rte?.ui.view.editable.set('isFocused', true);
+                rte?.ui.view.panel.set('isVisible', true);
+            }
+
+            editor.setCustomRte({
+
+                enable(el, rte) {
+                    if (rte) {
+                        focus(el, rte);
+                        return rte;
+                    }
+
+                    return InlineEditor.create(el, config)
+                        .then(editor => {
+                            rte = editor;
+                            focus(el, rte);
+                            return rte;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            throw err;
+                        });
+
+                },
+
+                disable(el, rte) {
+                    el.contentEditable = 'false';
+                    // rte?.ui.view.editable.set('isFocused', false);
+                    // rte?.ui.view.panel.set('isVisible', false);
+                },
+
+                getContent(el, rte) {
+                    const htmlString = rte.getData();
+                    return htmlString;
+                }
+            });
+        }
+
+
+        window.editor = grapesjs.init({
+            height: '100%',
+            noticeOnUnload: 0,
+            storageManager: { autoload: 0 },
+            plugins: [customRTE],
+            container: '#gjs',
+            fromElement: true,
+        });
+
+
+        window.editor.on('rteToolbarPosUpdate', (pos) => {
+
+        });
+
+    </script>
+</body>
+
+</html>

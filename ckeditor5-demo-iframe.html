@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <style>
+        #container {
+            width: 1000px;
+            margin: 20px auto;
+        }
+
+        .ck-editor__editable[role="textbox"] {
+            /* Editing area */
+            min-height: 200px;
+        }
+
+        .ck-content .image {
+            /* Block images */
+            max-width: 80%;
+            margin: 20px auto;
+        }
+    </style>
+    <div id="myeditablediv">
+        hello
+        hello
+        hello
+        hello
+        hello
+    </div>
+    <div id="d1">
+        hello
+        hello
+        hello
+        hello
+        hello
+    </div>
+    <div id="d2">
+        hello
+        hello
+        hello
+        hello
+        hello
+    </div>
+    <iframe id="myiframe" class="gjs-frame" style="width: 100%; height: 500px;"></iframe>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/inline/ckeditor.js"></script>
+    <script>
+        let iframe = document.querySelector("#myiframe");
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+        if (iframeDoc) {
+            iframeDoc.open();
+            iframeDoc.write(`<!DOCTYPE html>`);
+            iframeDoc.write(`<div id="editable" class="helo">hahahahahahhahahah</div> `);
+            iframeDoc.close();
+            const editableDiv = iframeDoc.getElementById('editable');
+
+            // inject script into the DOM
+            var s = iframeDoc.createElement('script');
+            s.type = 'text/javascript';
+            s.src = 'https://cdn.ckeditor.com/ckeditor5/41.4.2/inline/ckeditor.js';
+            s.onload = function () {
+                console.log("触发iframe");
+
+                if (editableDiv) {
+                    iframe.contentWindow.InlineEditor
+                        .create(editableDiv, config)
+                        .then(rte => {
+                            rte.focus();
+                            rte.editing.view.focus();
+
+                            // rte?.ui.focusTracker.set('isFocused', true);
+                            // rte?.ui.view.editable.set('isFocused', true);
+                            // rte?.editing.view.document.set('isFocused', true);
+                            // rte?.ui.view.panel.set('isVisible', true);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }
+            }
+            iframeDoc.getElementsByTagName('head')[0].appendChild(s);
+        }
+
+        const config = {
+            toolbar: {
+                items: [
+                    'undo', 'redo',
+                    '|', 'heading',
+                    '|', 'bold', 'italic',
+                    '|', 'link', 'insertImage', 'insertTable', 'mediaEmbed',
+                    '|', 'bulletedList', 'numberedList', 'outdent', 'indent'
+                ]
+            },
+            cloudServices: {
+                // All predefined builds include the Easy Image feature.
+                // Provide correct configuration values to use it.
+                //tokenUrl: 'https://example.com/cs-token-endpoint',
+                //uploadUrl: 'https://your-organization-id.cke-cs.com/easyimage/upload/'
+                // Read more about Easy Image - https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/easy-image.html.
+                // For other image upload methods see the guide - https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html.
+            },
+        };
+
+        InlineEditor
+            .create(document.querySelector('#myeditablediv'), config)
+            .then(rte => {
+                rte.focus();
+
+                console.log(rte?.ui.focusTracker.isFocused);
+                console.log(rte?.ui.view.editable.isFocused);
+                console.log(rte?.ui.view.panel.isVisible);
+                console.log(rte?.editing.view.document.isFocused);
+
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <style>
+        #container {
+            width: 1000px;
+            margin: 20px auto;
+        }
+
+        .ck-editor__editable[role="textbox"] {
+            /* Editing area */
+            min-height: 200px;
+        }
+
+        .ck-content .image {
+            /* Block images */
+            max-width: 80%;
+            margin: 20px auto;
+        }
+    </style>
+    <div id="container">
+
+        <div>
+            this is test1
+        </div>
+        <div>
+            this is test1
+        </div>
+        <div>
+            this is test1
+            this is test1
+
+
+            this is test1 this is test1 this is test1
+
+            this is test1
+            this is test1
+            this is test1
+            this is test1
+            this is test1
+        </div>
+        this is test1
+
+        this is test1
+        this is test1
+        this is test1
+        this is test1
+        this is test1
+
+        this is test1 this is test1 this is test1
+
+        this is test1
+        this is test1
+        this is test1
+        this is test1
+        this is test1
+    </div>
+    <div id="editor">
+        this is editor test
+    </div>
+    <div>
+        this is test1
+
+        this is test1
+        this is test1
+        this is test1
+        this is test1
+        this is test1
+
+        this is test1 this is test1 this is test1
+
+        this is test1
+        this is test1
+        this is test1
+        this is test1
+        this is test1
+    </div>
+    this is test1
+    </div>
+    <div>
+        this is test1
+    </div>
+    <div>
+        this is test1
+    </div>
+    <div>
+        this is test1
+    </div>
+    <div>
+        this is test1
+    </div>
+    <div>
+        this is test1
+    </div>
+
+    <div>
+        this is test1
+    </div>
+    <div>
+        this is test1
+    </div>
+    <div>
+        this is test1
+    </div>
+    <div>
+        this is test1
+    </div>
+    </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/inline/ckeditor.js"></script>
+    <script>
+
+        const config = {
+            toolbar: {
+                items: [
+                    'undo', 'redo',
+                    '|', 'heading',
+                    '|', 'bold', 'italic',
+                    '|', 'link', 'insertImage', 'insertTable', 'mediaEmbed',
+                    '|', 'bulletedList', 'numberedList', 'outdent', 'indent'
+                ]
+            },
+            cloudServices: {
+                // All predefined builds include the Easy Image feature.
+                // Provide correct configuration values to use it.
+                //tokenUrl: 'https://example.com/cs-token-endpoint',
+                //uploadUrl: 'https://your-organization-id.cke-cs.com/easyimage/upload/'
+                // Read more about Easy Image - https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/easy-image.html.
+                // For other image upload methods see the guide - https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html.
+            },
+        };
+
+        InlineEditor
+            .create(document.querySelector('#editor'), config)
+            .then(rte => {
+                rte.focus();
+
+                console.log(rte?.ui.focusTracker.isFocused);
+                console.log(rte?.ui.view.editable.isFocused);
+                console.log(rte?.ui.view.panel.isVisible);
+                console.log(rte?.editing.view.document.isFocused);
+                
+                
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+</body>
+
+</html>

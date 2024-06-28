@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test =5</title>
+</head>
+
+<body>
+    <div id="myeditablediv">hello</div>
+    <iframe id="myiframe" class="gjs-frame" style="width: 100%; height: 500px;"></iframe>
+</body>
+<script src="/node_modules/tinymce/tinymce.js"></script>
+<script defer>
+    console.log('页面加载完成1！');
+    let iframe = document.querySelector("#myiframe");
+
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (iframeDoc) {
+        iframeDoc.open();
+        iframeDoc.write(`<!DOCTYPE html>`);
+        iframeDoc.write(`<div id="editable" class="helo">hahahahahahhahahah</div> `);
+        iframeDoc.close();
+        const editableDiv = iframeDoc.getElementById('editable');
+
+        // inject script into the DOM
+        var s = iframeDoc.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '/node_modules/tinymce/tinymce.js';
+        s.onload = function () {
+            console.log("触发iframe");
+
+            if (editableDiv) {
+                iframe.contentWindow.tinymce.init({
+                    target: editableDiv,
+                    inline: true,
+                    auto_focus: true,
+                    license_key: 'gpl',
+                    setup: function (editor) {
+                        editor.on('init', function (args) {
+                           
+                        });
+                    }
+                }).then(editor => {
+                    console.log('初始成功');
+                });
+            }
+        }
+        iframeDoc.getElementsByTagName('head')[0].appendChild(s);
+    }
+
+    tinymce.init({
+        selector: '#myeditablediv',
+        inline: true,
+        //auto_focus: true,
+        license_key: 'gpl',
+        setup: function (editor) {
+            //editor.focus();
+        }
+    }).then(editor => {
+    });
+
+</script>
+
+</html>
