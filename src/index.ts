@@ -1,4 +1,4 @@
-import plugin from "./ck5";
+import plugin from "./mtinymce";
 
 
 export default plugin;

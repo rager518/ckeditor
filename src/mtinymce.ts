@@ -28,6 +28,12 @@ const loadFromCDN = (doc: Document, url: string) => {
     return scr;
 }
 
+const forEach = <T extends HTMLElement = HTMLElement>(items: Iterable<T>, clb: (item: T) => void) => {
+    [].forEach.call(items, clb);
+}
+
+const stopPropagation = (ev: Event) => ev.stopPropagation();
+
 const plugin: Plugin<PluginOptions> = (editor, options = {}) => {
     const opts: Required<PluginOptions> = {
         customRte: {},
@@ -44,25 +50,10 @@ const plugin: Plugin<PluginOptions> = (editor, options = {}) => {
     const focus = (el: HTMLElement, rte?: Editor) => {
         if (rte?.hasFocus()) return;
 
+        el.focus();
         rte?.focus();
         updateEditorToolbars();
     };
-
-    const config = {
-        toolbar: {
-            items: [
-                'undo', 'redo',
-                '|', 'heading',
-                '|', 'bold', 'italic',
-                '|', 'link', 'insertImage', 'insertTable', 'mediaEmbed',
-                '|', 'bulletedList', 'numberedList', 'outdent', 'indent'
-            ]
-        },
-        cloudServices: {
-
-        },
-    };
-
 
     editor.setCustomRte({
         getContent(el, rte: Editor) {
@@ -76,21 +67,44 @@ const plugin: Plugin<PluginOptions> = (editor, options = {}) => {
                 return rte;
             }
 
+            const toolbar = 'alignleft aligncenter alignright|forecolor fontsizeinput|bold italic underline strikethrough link customButton';
+
             return globMCE.init({
                 target: el,
                 inline: true,
                 auto_focus: true,
+                menubar: false,
+                toolbar: toolbar,
+                font_size_input_default_unit: "px",
+                plugins: 'link',
                 license_key: 'gpl',
-                // setup: function (r) {
-                //     rte = r;
-                //     focus(el, rte);
-                //     return rte;
-                // }
+                setup: function (r) {
+                    r.ui.registry.addSplitButton('customButton', {
+                        text: '站点标题',
+                        onAction: (_) => r.insertContent('{{-STORENAME-}}'),
+                        onItemAction: (buttonApi, value) => r.insertContent(value),
+                        fetch: (callback) => {
+                            const items = [
+                                {
+                                    type: 'choiceitem',
+                                    text: '站点标题',
+                                    value: '{{-STORENAME-}}'
+                                },
+                                {
+                                    type: 'choiceitem',
+                                    text: '页面标题',
+                                    value: '{{-TITLE-}}'
+                                }
+                            ];
+                            callback(items as any);
+                        }
+                    });
+                }
             }).then(editors => {
-
                 if (editors.length > 0) {
                     rte = editors[0];
-                    //focus(el, rte);
+
+                    focus(el, rte);
                     return rte;
                 }
             });
@@ -98,6 +112,7 @@ const plugin: Plugin<PluginOptions> = (editor, options = {}) => {
 
         disable(el, rte?: Editor) {
             //el.contentEditable = 'false';
+            //debugger;
         },
 
         ...opts.customRte,
