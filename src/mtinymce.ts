@@ -67,7 +67,7 @@ const plugin: Plugin<PluginOptions> = (editor, options = {}) => {
                 return rte;
             }
 
-            const toolbar = 'alignleft aligncenter alignright|forecolor fontsizeinput|bold italic underline strikethrough link customButton';
+            const toolbar = ['alignleft aligncenter alignright|forecolor fontsizeinput','bold italic underline strikethrough link customButton'];
 
             return globMCE.init({
                 target: el,
